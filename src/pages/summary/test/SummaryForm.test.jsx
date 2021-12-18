@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen, waitForElementToBeRemoved } from "@testing-library/react";
+import userEvent from "@testing-library/user-event"
 import SummaryForm from '../SummaryForm';
-import App from '../../../App'
 
 describe('SummaryForm component', () => {
 
@@ -18,12 +18,31 @@ describe('SummaryForm component', () => {
         const checkbox = screen.getByRole('checkbox', { name: /terms and conditions/i});
         const confirmButton = screen.getByRole('button', { name: /confirm order/i });;
 
-        fireEvent.click(checkbox);
+        userEvent.click(checkbox);
         expect(confirmButton).toBeEnabled();
 
-        fireEvent.click(checkbox);
+        userEvent.click(checkbox);
         expect(confirmButton).toBeDisabled();
 
+    })
+
+    test('popover respons to hove', async () => {
+        render(<SummaryForm />);
+        // const nullPopover = screen.queryByText(/no icescreems will be delivered/i);
+        // expect(nullPopover).toBeNull();
+
+        // //make the hover action
+        // const termNConditions = screen.getByText(/Terms and Conditions/i);
+        // userEvent.hover(termNConditions);
+        // // const popover = screen.getByText(/no icescreems will be delivered/i);
+        // expect(popover).toBeInTheDocument();
+
+        // //make unhover action test
+        // userEvent.unhover(termNConditions);
+
+        // await waitForElementToBeRemoved(() => {
+        //     return screen.queryByText(/no icescreems will be delivered/i);
+        // })
     })
 
 })
